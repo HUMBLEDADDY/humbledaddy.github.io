@@ -5,7 +5,7 @@ tags: [Python,蟒蛇书]
 categories: [Python]
 ---
 
-# Python--基础知识（第四章-操作列表）
+
 
 ```python
 magicians = ['alice','david','carolina']
@@ -20,7 +20,7 @@ for magician in magicians:
 ### 缩进
 
 到了Python比较奇特的一个点——缩进
-
+<!-- more -->
 Python没有使用大部分语言所习惯的大括号来标记代码块，而是使用了缩进来表示代码块。
 
 > 我一直觉得这是一种聪明的做法，不仅是开发者不用去纠结括号的对应，还能使得代码的可读性更高。

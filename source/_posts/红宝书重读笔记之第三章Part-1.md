@@ -1,15 +1,15 @@
 ---
-title: 红宝书重读笔记之第三章
+title: 红宝书重读笔记之第三章 Part.1
 date: 2022-04-22 15:08:44
 tags: [JavaScript,前端,红宝书]
 categories: [前端,JavaScript]
 ---
-# 红宝书重读笔记之第三章
 第三章主要是一些语言基础，包括基本变量，基本语句等。简单但是还是挺杂乱的的。
 
 ## 语法
 一些基本的变量命名问题。  
 例如，规避关键字，区分大小写，变量no数字开头，尽量使用单驼峰命名规则。
+<!-- more -->
 语句问题：
 还是加上分号";"，多用代码块等等。
 
@@ -21,13 +21,13 @@ categories: [前端,JavaScript]
   var的作用域是函数作用域，定义在函数内部就是局部变量，虽然其实可以通过省略var，来使这个变量变成全局变量，但是不推荐这样做。  
   另外var还有变量提升，就是可以在定义前访问（虽然当然是undefined）  
   
-    ```
+    ```javascript
     console.log(a);
     var a = 'a';  
     ```
 
     上述代码其实等价于:  
-      ```
+      ```javascript
       var a;
       console.log(a);
       a = 'a';
@@ -111,7 +111,7 @@ Null和Undefined太像了,也是只有一个特殊值,null,表示一个空对象
 ### Number类型
 经典的IEEE754标准(考研时候差点没把我折磨死跍😒)  
 IEEE754精确度可以达到17位小数，但是他处理不了
-``` 
+``` javascript
 0.1 + 0.2 === 0.3
 ```
 这样的问题，我认为是二进制和754带来的问题.
@@ -119,12 +119,12 @@ IEEE754精确度可以达到17位小数，但是他处理不了
 ##### 大小数
 Infinity,js中的极限,不能用于计算.  
 js甚至专门提供一个函数来判断这个数是不是极限.  
-```
+```javascript
 console.log(isFinite(num))
 ```
 
 有两种方式去获取这个值
-```
+```javascript
 Number.MAX_VALUE,Number.MIN_VALUE;
 Number.POSITIVE_INFINITY,Number.NEGATIVE_INFINITY;
 ```
@@ -171,3 +171,18 @@ JS提供toString()方法用来将其他类型的值转化为字符串,几乎所�
 * 模板字面量用反引号
 * 可以保留换行符,这是单引号或者双引号做不到的
 * 用${}来插入变量
+
+##### 模板字面量标签函数
+```javascript
+const a = 1,
+    b = 2;
+
+function simpleTag(strings, ...args) {
+    console.log(strings);
+    console.log(args);
+    return 'yes';
+}
+
+let test = simpleTag `${a}+${b}=${a+b}`;
+console.log(test);
+```

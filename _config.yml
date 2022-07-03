@@ -98,7 +98,7 @@ ignore:
 Plugins: hexo-generator-sitemap,hexo-generator-baidu-sitemap
 
 ## Themes: https://hexo.io/themes/
-theme: maupassant
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
