@@ -8,9 +8,8 @@ subtitle: ''
 description: '庄莫碧'
 keywords:
 author: Mobius
-language: zh-Hans
-timezone: ''
-
+language: zh-CN	#语言
+timezone: Asia/Shanghai    #中国的时区
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://humbledaddy.github.io
@@ -98,7 +97,7 @@ ignore:
 Plugins: hexo-generator-sitemap,hexo-generator-baidu-sitemap
 
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: butterfly
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
