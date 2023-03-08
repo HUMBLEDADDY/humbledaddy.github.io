@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python,蟒蛇书," />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -81,16 +81,15 @@
 
 <meta name="description" content="MBR和GPT磁盘分区表目前存在的磁盘分区表主要是这两种格式,以前重装系统或者折腾双系统的时候总是对这块不求甚解,对于操作系统的学习又没有细化到磁盘的实际调度,所以对这块一直模模糊糊,总是凭借经验去处理. MBRMBR相对来说是比较落后的一种分区形式 主引导记录(446Byte)和分区表(64Byte)   分区表只能支持四组记录区,所以MBR最多只能支持(四个主分区或者扩展分区),所以这也是为什">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python学习笔记">
+<meta property="og:title" content="Linux学习笔记">
 <meta property="og:url" content="https://humbledaddy.github.io/2022/01/10/MBR%E5%92%8CGPT%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E8%A1%A8/index.html">
 <meta property="og:site_name" content="Mobius">
 <meta property="og:description" content="MBR和GPT磁盘分区表目前存在的磁盘分区表主要是这两种格式,以前重装系统或者折腾双系统的时候总是对这块不求甚解,对于操作系统的学习又没有细化到磁盘的实际调度,所以对这块一直模模糊糊,总是凭借经验去处理. MBRMBR相对来说是比较落后的一种分区形式 主引导记录(446Byte)和分区表(64Byte)   分区表只能支持四组记录区,所以MBR最多只能支持(四个主分区或者扩展分区),所以这也是为什">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-10T06:17:25.000Z">
-<meta property="article:modified_time" content="2022-11-23T08:52:27.802Z">
+<meta property="article:modified_time" content="2023-03-08T05:37:09.816Z">
 <meta property="article:author" content="Mobius">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="蟒蛇书">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
 
 
@@ -127,7 +126,7 @@
 
 
 
-  <title>Python学习笔记 | Mobius</title>
+  <title>Linux学习笔记 | Mobius</title>
   
 
 
@@ -311,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">Linux学习笔记</h1>
         
 
         <div class="post-meta">
@@ -346,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -386,8 +385,20 @@
         <h1 id="MBR和GPT磁盘分区表"><a href="#MBR和GPT磁盘分区表" class="headerlink" title="MBR和GPT磁盘分区表"></a>MBR和GPT磁盘分区表</h1><p>目前存在的磁盘分区表主要是这两种格式,以前重装系统或者折腾双系统的时候总是对这块不求甚解,对于操作系统的学习又没有细化到磁盘的实际调度,所以对这块一直模模糊糊,总是凭借经验去处理.</p>
 <h2 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h2><p>MBR相对来说是比较落后的一种分区形式</p>
 <p>主引导记录(446Byte)和分区表(64Byte)  </p>
-<p>分区表只能支持四组记录区,所以MBR最多只能支持(四个主分区或者扩展分区),所以这也是为什么windows主流分区就是CDEF三个分区</p>
-<p>但是具体的需求不可能之用四个分区就直接满足的,就要通过扩展分区去实现分区的扩展,可以在扩展分区中再去划分逻辑分区,在扩展分区中</p>
+<p>分区表只能支持四组记录区,所以MBR最多只能支持(四个主分区或者扩展分区),所以这也是为什么windows主流分区就是CDEF四个分区</p>
+<p>但是具体的需求不可能之用四个分区就直接满足的,就要通过扩展分区去实现分区的扩展,可以在扩展分区中再去划分逻辑分区,在扩展分区中再拿一个额外的扇区作分区表,记录逻辑分区的分区信息.</p>
+<p>最后形成的逻辑结构就是:</p>
+<p>P+P+P+E(L+…+L)</p>
+<p>不管怎么分配四个一级分区的设备文件名是一定要预留的，比如说：</p>
+<p>/dev/sda1</p>
+<p>/dev/sda2</p>
+<p>/dev/sda5</p>
+<p>/dev/sda6</p>
+<p>/dev/sda7</p>
+<p>/dev/sda8</p>
+<p>虽然在这里，系统只使用了一个主分区加一个扩展分区，但是sda3和sda4的设备名其实是已经预留好的，扩展分区的二级分区只能从sda5开始分配。</p>
+<p>另外，扩展分区只能有一个，且扩展分区不能被格式化。如果扩展分区被强行格式化或者破坏掉，那么扩展分区内的所有逻辑分区都会被删除，因为所有逻辑分区的分区表是存放在扩展分区的。所以能够被格式化的只有主分区和逻辑分区。</p>
+<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><p>MBR天生就有缺陷，就是MBR的分区表只有区区</p>
 
       
     </div>
@@ -405,9 +416,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
-          
-            <a href="/tags/%E8%9F%92%E8%9B%87%E4%B9%A6/" rel="tag"># 蟒蛇书</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -420,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/01/10/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Python学习笔记">
-                <i class="fa fa-chevron-left"></i> Python学习笔记
+              <a href="/2022/01/10/Mixin/" rel="next" title="Linux学习笔记">
+                <i class="fa fa-chevron-left"></i> Linux学习笔记
               </a>
             
           </div>
@@ -509,7 +518,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -520,7 +529,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -531,7 +540,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -564,7 +573,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MBR%E5%92%8CGPT%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">MBR和GPT磁盘分区表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MBR"><span class="nav-number">1.1.</span> <span class="nav-text">MBR</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MBR%E5%92%8CGPT%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">MBR和GPT磁盘分区表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MBR"><span class="nav-number">1.1.</span> <span class="nav-text">MBR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPT"><span class="nav-number">1.2.</span> <span class="nav-text">GPT</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -584,7 +593,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

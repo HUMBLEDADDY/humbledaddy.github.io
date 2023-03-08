@@ -291,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://humbledaddy.github.io/2022/01/10/MBR%E5%92%8CGPT%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E8%A1%A8/">
+    <link itemprop="mainEntityOfPage" href="https://humbledaddy.github.io/2022/01/10/Redux%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -310,7 +310,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/01/10/MBR%E5%92%8CGPT%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E8%A1%A8/" itemprop="url">Python学习笔记</a></h1>
+                <a class="post-title-link" href="/2022/01/10/Redux%E5%AD%A6%E4%B9%A0/" itemprop="url">Redux学习</a></h1>
         
 
         <div class="post-meta">
@@ -345,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -384,153 +384,45 @@
       
         
           
-            <h1 id="MBR和GPT磁盘分区表"><a href="#MBR和GPT磁盘分区表" class="headerlink" title="MBR和GPT磁盘分区表"></a>MBR和GPT磁盘分区表</h1><p>目前存在的磁盘分区表主要是这两种格式,以前重装系统或者折腾双系统的时候总是对这块不求甚解,对于操作系统的学习又没有细化到磁盘的实际调度,所以对这块一直模模糊糊,总是凭借经验去处理.</p>
-<h2 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h2><p>MBR相对来说是比较落后的一种分区形式</p>
-<p>主引导记录(446Byte)和分区表(64Byte)  </p>
-<p>分区表只能支持四组记录区,所以MBR最多只能支持(四个主分区或者扩展分区),所以这也是为什么windows主流分区就是CDEF三个分区</p>
-<p>但是具体的需求不可能之用四个分区就直接满足的,就要通过扩展分区去实现分区的扩展,可以在扩展分区中再去划分逻辑分区,在扩展分区中</p>
+            <p>React使用的状态管理容器，对标Vuex2</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>action其实就是一个简单的JavaScript对象，只是描述应用程序中发生了什么样的事件。</p>
+<p>一个type描述action要干啥，一般协作“域/事件名称”。而像是其他的附加信息就放在payload里面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> addTodoAction = &#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;todos/todoAdded&#x27;</span>,</span><br><span class="line">  <span class="attr">payload</span>: <span class="string">&#x27;Buy milk&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-          
-        
-      
-    </div>
-    
-    
-    
+<h2 id="Action-Creator"><a href="#Action-Creator" class="headerlink" title="Action Creator"></a>Action Creator</h2><p>action creator其实就是一个返回action对象的一个函数，一个个自己手撕太不雅观，写个函数，动态给payload赋值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">addTodo</span> = text =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;todos/todoAdded&#x27;</span>,</span><br><span class="line">    <span class="attr">payload</span>: text</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    
+<h2 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a>Reducer</h2><p>一个函数，接受state和action，然后生成新的state,(state,action) =&gt; newState</p>
+<ul>
+<li>reducer只能使用state和action来计算新的状态值</li>
+<li>禁止直接修改state，只能对复制的值来进行不可变更新</li>
+<li>禁止使用异步，或者随机值，或者其他“副作用”的代码 </li>
+</ul>
+<h2 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h2><p>当前 Redux 应用的 state 存在于一个名为 <strong>store</strong> 的对象中。</p>
+<p>store 是通过传入一个 reducer 来创建的，并且有一个名为 <code>getState</code> 的方法，它返回当前状态值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; configureStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@reduxjs/toolkit&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">configureStore</span>(&#123; <span class="attr">reducer</span>: counterReducer &#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>())</span><br><span class="line"><span class="comment">// &#123;value: 0&#125;</span></span><br></pre></td></tr></table></figure>
 
-    
+<h2 id="Dispatch"><a href="#Dispatch" class="headerlink" title="Dispatch"></a>Dispatch</h2><p>更新store的唯一办法，调用store.dispatch()传入一个action对象，store 将执行所有 reducer 函数并计算出更新后的 state，调用 <code>getState()</code> 可以获取新 state。而store.dispatch()是view层面发出Action的唯一办法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">store.<span class="title function_">dispatch</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;counter/increment&#x27;</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>())</span><br><span class="line"><span class="comment">// &#123;value: 1&#125;</span></span><br></pre></td></tr></table></figure>
 
-    
+<p>配合上Action Creator，写出的代码很舒服：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.<span class="title function_">dispatch</span>(<span class="title function_">addTodo</span>(<span class="string">&#x27;Learn Redux&#x27;</span>));</span><br></pre></td></tr></table></figure>
 
-    <footer class="post-footer">
-      
+<h2 id="Subscribe"><a href="#Subscribe" class="headerlink" title="Subscribe"></a>Subscribe</h2><p>监听State的变化，一旦State发生改变就自动执行这个函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(reducer);</span><br><span class="line"></span><br><span class="line">store.<span class="title function_">subscribe</span>(listener);</span><br></pre></td></tr></table></figure>
 
-      
+<p>对应的,如果在listener的位置放上React组件的render函数或者setState方法,就能实现视图层的自动渲染.</p>
+<p>既然监听就会有解除监听(不然就有内存溢出的风险),Subsribe的处理方法和Hook中的useEffect有异曲同工之妙，都是返回一个函数，调用这个函数就可以接触监听。</p>
+<h2 id="Reducer的拆分"><a href="#Reducer的拆分" class="headerlink" title="Reducer的拆分"></a>Reducer的拆分</h2><p>目前的理解跟Vuex分module的思路差不多，整个应用的state靠一个reducer维护显然是不太现实的，所以就涉及拆分，拆分成不同的函数，不同的函数处理不同属性，最后合并成一个大的Reducer就行了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">chatReducer</span> = (<span class="params">state = defaultState, action = &#123;&#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">chatLog</span>: <span class="title function_">chatLog</span>(state.<span class="property">chatLog</span>, action),</span><br><span class="line">    <span class="attr">statusMessage</span>: <span class="title function_">statusMessage</span>(state.<span class="property">statusMessage</span>, action),</span><br><span class="line">    <span class="attr">userName</span>: <span class="title function_">userName</span>(state.<span class="property">userName</span>, action)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-      
+<p>Redux提供一个combineReducers，用于组合拆分出来的Reducer，只要定义各个子函数，然后使用这个方法，将它们合成一个大的Reducer。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chatReducer = <span class="title function_">combineReducers</span>(&#123;</span><br><span class="line">  chatLog,</span><br><span class="line">  statusMessage,</span><br><span class="line">  userName</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> todoApp;</span><br></pre></td></tr></table></figure>
 
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>有时候我们的Reducer操作会涉及异步操作，所以我们就需要一个新的工具那就是中间件</p>
+<h4 id="中间件的概念"><a href="#中间件的概念" class="headerlink" title="中间件的概念"></a>中间件的概念</h4><p>如果要在Redux里面添加中间件，Rudcer不行，View不行，Action也不行，所以只剩下dispatch是可行的</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> next = store.<span class="property">dispatch</span>;</span><br><span class="line">store.<span class="property">dispatch</span> = <span class="keyword">function</span> <span class="title function_">dispatchAndLog</span>(<span class="params">action</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;dispatching&#x27;</span>, action);</span><br><span class="line">  <span class="title function_">next</span>(action);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;next state&#x27;</span>, store.<span class="title function_">getState</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://humbledaddy.github.io/2022/01/10/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mobius">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/01/10/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">Python学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-10T14:17:25+08:00">
-                2022-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一直没有系统地学习Pyhthon，正好最近学校弄了一个Python的毕业实习，还是不喜欢听培训班的那一套，自购一本蟒蛇书，开始学习Python，此章伊始。</p>
 
           
         
@@ -616,7 +508,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -627,7 +519,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -638,7 +530,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -675,7 +567,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

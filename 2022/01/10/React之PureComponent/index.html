@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="React," />
 
 
 
@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="React之PureComponent和memo其实主要的点是在memo,memo是React16.6.0推出的(另外一个主要的功能就是React.lazy()) memo其实就是PureComponent的Functional component版本 PureComponent的逻辑其实就是把props和state进行了一层浅比较,如果改变了,那么就调用render().如果没有或者只是包含的某">
+<meta name="description" content="其实主要的点是在memo,memo是React16.6.0推出的(另外一个主要的功能就是React.lazy()) memo其实就是PureComponent的Functional component版本 PureComponent的逻辑其实就是把props和state进行了一层浅比较,如果改变了,那么就调用render().如果没有或者只是包含的某个属性发生了改变,就不重新渲染,最后的目的其实就">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mobius">
-<meta property="og:url" content="https://humbledaddy.github.io/2022/09/26/React%E4%B9%8BPureComponent/index.html">
+<meta property="og:title" content="React之PureComponent和memo">
+<meta property="og:url" content="https://humbledaddy.github.io/2022/01/10/React%E4%B9%8BPureComponent/index.html">
 <meta property="og:site_name" content="Mobius">
-<meta property="og:description" content="React之PureComponent和memo其实主要的点是在memo,memo是React16.6.0推出的(另外一个主要的功能就是React.lazy()) memo其实就是PureComponent的Functional component版本 PureComponent的逻辑其实就是把props和state进行了一层浅比较,如果改变了,那么就调用render().如果没有或者只是包含的某">
+<meta property="og:description" content="其实主要的点是在memo,memo是React16.6.0推出的(另外一个主要的功能就是React.lazy()) memo其实就是PureComponent的Functional component版本 PureComponent的逻辑其实就是把props和state进行了一层浅比较,如果改变了,那么就调用render().如果没有或者只是包含的某个属性发生了改变,就不重新渲染,最后的目的其实就">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-26T01:51:07.920Z">
-<meta property="article:modified_time" content="2022-09-26T05:20:53.934Z">
+<meta property="article:published_time" content="2022-01-10T06:17:25.000Z">
+<meta property="article:modified_time" content="2023-03-08T05:40:16.661Z">
 <meta property="article:author" content="Mobius">
+<meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://humbledaddy.github.io/2022/09/26/React之PureComponent/"/>
+  <link rel="canonical" href="https://humbledaddy.github.io/2022/01/10/React之PureComponent/"/>
 
 
 
 
 
-  <title> | Mobius</title>
+  <title>React之PureComponent和memo | Mobius</title>
   
 
 
@@ -292,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://humbledaddy.github.io/2022/09/26/React%E4%B9%8BPureComponent/">
+    <link itemprop="mainEntityOfPage" href="https://humbledaddy.github.io/2022/01/10/React%E4%B9%8BPureComponent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -309,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">React之PureComponent和memo</h1>
         
 
         <div class="post-meta">
@@ -321,8 +322,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-09-26T09:51:07+08:00">
-                2022-09-26
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-10T14:17:25+08:00">
+                2022-01-10
               </time>
             
 
@@ -331,6 +332,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -359,7 +382,7 @@
       
 
       
-        <h1 id="React之PureComponent和memo"><a href="#React之PureComponent和memo" class="headerlink" title="React之PureComponent和memo"></a>React之PureComponent和memo</h1><p>其实主要的点是在memo,memo是React16.6.0推出的(另外一个主要的功能就是React.lazy())</p>
+        <p>其实主要的点是在memo,memo是React16.6.0推出的(另外一个主要的功能就是React.lazy())</p>
 <p>memo其实就是PureComponent的Functional component版本</p>
 <p>PureComponent的逻辑其实就是把props和state进行了一层浅比较,如果改变了,那么就调用render().如果没有或者只是包含的某个属性发生了改变,就不重新渲染,最后的目的其实就是实现性能的优化.</p>
 <p>所以只推荐在拥有简单的props和state的时候,才推荐去使用PureComponent,一旦涉及复杂的数据结构,就有可能出现model层已经更新了,但是view层经过浅对比,觉得不用更新</p>
@@ -394,6 +417,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
 
       
       
@@ -403,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/09/19/Redux%E5%AD%A6%E4%B9%A0/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2022/01/10/Redux%E5%AD%A6%E4%B9%A0/" rel="next" title="Redux学习">
+                <i class="fa fa-chevron-left"></i> Redux学习
               </a>
             
           </div>
@@ -413,8 +442,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2022/10/28/Mixin/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2022/01/10/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Python学习笔记">
+                Python学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -492,7 +521,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -503,7 +532,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -514,7 +543,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -547,7 +576,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React%E4%B9%8BPureComponent%E5%92%8Cmemo"><span class="nav-number">1.</span> <span class="nav-text">React之PureComponent和memo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Memo%E5%85%B6%E5%AE%9E%E5%A4%A7%E5%B7%AE%E4%B8%8D%E5%B7%AE"><span class="nav-number">1.0.1.</span> <span class="nav-text">Memo其实大差不差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useMemo"><span class="nav-number">1.0.2.</span> <span class="nav-text">useMemo</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Memo%E5%85%B6%E5%AE%9E%E5%A4%A7%E5%B7%AE%E4%B8%8D%E5%B7%AE"><span class="nav-number">1.</span> <span class="nav-text">Memo其实大差不差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useMemo"><span class="nav-number">2.</span> <span class="nav-text">useMemo</span></a></li></ol></div>
             
 
           </div>
@@ -567,7 +596,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
